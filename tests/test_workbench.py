@@ -9,5 +9,5 @@ def test_workbench_creation(login_to_admin):
     loginPage=LoginPage(page)
     loginPage.do_login(LoginMotherObject.valid_credentials())
     homepage=HomePage(page)
-   # homepage.create_new_project()
+    homepage.create_new_project()
     homepage.view_details()
