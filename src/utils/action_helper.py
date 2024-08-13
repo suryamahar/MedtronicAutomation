@@ -1,8 +1,10 @@
 from datetime import datetime
-class ActionHelper():
 
-    def __init__(self,page):
-        self.page=page
+
+class ActionHelper:
+
+    def __init__(self, page):
+        self.page = page
 
     def take_screenshot(self):
         now = datetime.now()
@@ -11,4 +13,4 @@ class ActionHelper():
         self.page.screenshot(path=file_path)
 
     def select_option_from_dropdown(self, option):
-        self.page.get_by_role("option", name=option)
+        self.page.get_by_role("option", name=option).click()
