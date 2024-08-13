@@ -21,6 +21,10 @@ class HomepageActions:
         self.instance_type_dropdown = page.locator("//div[text()='Instance Type']/../following-sibling::div//input")
         self.refresh_btn = page.get_by_role("button", name="Refresh")
         self.action_helper = ActionHelper(self.page)
+        self.edit_btn = page.get_by_role("button", name="Edit")
+        self.deactivate_project_btn = page.get_by_role("button", name="Deactivate Project")
+        self.deactivate_i_understand_toggle = page.locator("input[type='checkbox']")
+        self.deactivate_btn = page.get_by_role("button", name="Deactivate")
 
     def click_view_details_for_project(self, project):
         return self.page.locator(f"//div[h4[text()='{project}']]/..//button")

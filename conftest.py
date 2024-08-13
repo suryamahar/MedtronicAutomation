@@ -1,22 +1,28 @@
+import time
+
 import pytest
-import os
+from playwright.sync_api import sync_playwright
+from config.config import TestData
+
+
+@pytest.fixture
+def page():
+    with sync_playwright() as p:
+        browser = p.chromium.launch(headless=False)
+        context = browser.new_context()
+        context.set_default_timeout(100000)
+        page = context.new_page()
+        yield page
+        page.close()
+        context.close()
+        browser.close()
 
 
 @pytest.fixture
 def login_to_admin(page):
-    page.goto("https://dqzgfcurugtza.cloudfront.net/?code=380e02bf-556a-484d-93e0-aa35eb7e2eb2")
-    page.click("//a[text()='here']")
+    page.goto(TestData.BASE_STAGE_URL)
+    time.sleep(5)
+    count = page.locator("//a[text()='here']").count()
+    if count > 0:
+        page.locator("//a[text()='here']").click()
     yield page
-
-
-@pytest.hookimpl(tryfirst=True)
-def pytest_runtest_makereport(item, call):
-    if call.when == 'call' and call.excinfo is not None:
-        report = item.config.pluginmanager.getplugin('terminalreporter').reporter
-        # Capture the screenshot if the test fails
-        page = item.funcargs.get('browser')
-        if page:
-            screenshot_path = f"screenshots/{item.name}.png"
-            os.makedirs(os.path.dirname(screenshot_path), exist_ok=True)
-            page.screenshot(path=screenshot_path)
-            report.write(f"\nScreenshot saved to: {screenshot_path}\n")
