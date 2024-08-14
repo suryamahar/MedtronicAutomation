@@ -1,6 +1,6 @@
 from playwright.sync_api import expect
 from medtronic.Homepage.homepage_motherobject import HomepageMotherObject
-from src.utils.action_helper import ActionHelper
+from src.utils.navigation import Navigation
 from medtronic.Homepage.hompage_actions import HomepageActions
 
 
@@ -10,6 +10,7 @@ class HomePage:
     def __init__(self, page):
         self.page = page
         self._homepage_actions = HomepageActions(self.page)
+        self._navigation= Navigation(self.page)
 
     def verify_title(self, title):
         assert self._homepage_actions.page_title == title
@@ -58,3 +59,23 @@ class HomePage:
         self._homepage_actions.refresh_btn.click()
         expect(self._homepage_actions.workbench_in_workbench_management(workbench_name)).to_be_visible()
         self._homepage_actions.action_helper.take_screenshot()
+
+    def verify_project_exists(self, project_title):
+        self._homepage_actions.medtronic_logo.click()
+        expect(self._homepage_actions.click_view_details_for_project(project_title)).to_be_visible()
+
+    def deactivate_project(self):
+        self._homepage_actions.edit_btn.click()
+        self._homepage_actions.deactivate_project_btn.click()
+        self._homepage_actions.deactivate_i_understand_toggle.click()
+        self._homepage_actions.deactivate_btn.click()
+
+    def verify_project_deactivated(self,project_title):
+        self._navigation.navigate_to_homepage()
+        self._navigation.switch_to_tab("Inactive")
+        self.verify_project_exists(project_title)
+
+
+
+
+

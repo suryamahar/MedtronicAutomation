@@ -5,7 +5,7 @@ from medtronic.Login.login_motherobject import LoginMotherObject
 from config.config import TestData
 
 
-def test_valid_login(login_to_admin):
+def test_valid_login(login_to_admin, page):
     page = login_to_admin
     login_page = LoginPage(page)
     login_page.do_login(LoginMotherObject.valid_credentials())
@@ -14,7 +14,7 @@ def test_valid_login(login_to_admin):
     homepage.verify_valid_login()
 
 
-def test_invalid_login(login_to_admin):
+def test_invalid_login(login_to_admin, page):
     page = login_to_admin
     login_page = LoginPage(page)
     login_page.do_login(LoginMotherObject.invalid_credentials())

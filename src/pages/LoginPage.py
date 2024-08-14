@@ -1,22 +1,20 @@
 from src.pages.HomePage import HomePage
+from medtronic.Login.login_actions import LoginActions
 
 
 class LoginPage:
     def __init__(self, page):
         page = page
-        self._username = page.locator(".panel #signInFormUsername")
-        self._password = page.locator(".panel #signInFormPassword")
-        self._login_btn = page.locator(".panel input[name='signInSubmitButton']")
-        self._page_title = page.title()
+        self._login_actions = LoginActions(self.page)
 
     def enter_username(self, u_name):
-        self._username.fill(u_name)
+        self._login_actions.username.fill(u_name)
 
     def enter_password(self, p_word):
-        self._password.fill(p_word)
+        self._login_actions.password.fill(p_word)
 
     def click_login(self):
-        self._login_btn.click()
+        self._login_actions.login_btn.click()
 
     def do_login(self, credentials):
         self.enter_username(credentials.get('username'))
