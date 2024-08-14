@@ -10,7 +10,7 @@ def test_project_creation(login_to_admin, page):
     login_page.do_login(LoginMotherObject.valid_credentials())
     homepage = HomePage(page)
     homepage.create_new_project(HomepageMotherObject.automation_project())
-    homepage.verify_project_created(HomepageMotherObject.automation_project().get('project_title'))
+    homepage.verify_project_exists(HomepageMotherObject.automation_project().get('project_title'))
 
 
 def test_deactivate_project(login_to_admin, page):
@@ -20,3 +20,4 @@ def test_deactivate_project(login_to_admin, page):
     homepage = HomePage(page)
     homepage.view_details(HomepageMotherObject.automation_project().get('project_title'))
     homepage.deactivate_project()
+    homepage.verify_project_deactivated(HomepageMotherObject.automation_project().get('project_title'))
