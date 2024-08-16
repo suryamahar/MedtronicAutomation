@@ -4,7 +4,7 @@ from medtronic.Login.login_actions import LoginActions
 
 class LoginPage:
     def __init__(self, page):
-        page = page
+        self.page = page
         self._login_actions = LoginActions(self.page)
 
     def enter_username(self, u_name):
